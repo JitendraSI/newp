@@ -1,0 +1,54 @@
+{% extends 'users/base.html' %}
+{% block content %}
+<div class="row">
+    <div style="padding:40px;" class="col-sm-4">
+        <h4 class="text-center alert alert-info ">ADD NEW ITEM TO LIST</h4>
+         <form action="" method="POST">
+             {% csrf_token %}
+             {{form.as_p}}
+             <input type="submit" class="btn btn-success" value="ADD">
+         </form>
+        </div>
+        <div class="col-sm-7 offset-1">
+        <H4 class="text-center alert alert-info">SHOW LIST</H4>    
+        
+        {% if stu %}
+          <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">NAME</th>
+                    <th scope="col">WORKNAME</th>
+                    <th scope="col">REMARK</th>
+                    <th scope="col">ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody> 
+                {% for st in stu  %}
+                <tr>
+                   <th scope="row">{{st.id}}</th>
+                   <td>{{st.name}}</td>
+                   <td>{{st.workname}}</td>
+                   <td>{{st.remark}}</td>
+                   <td>
+                    <a href="{% url 'updatedata' st.id %}" class="btn btn-warning btn-sm">Edit</a>
+                       <form action="{% url 'deletedata' st.id %}" method="POST" class="d-inline">
+                           {% csrf_token %}
+                           <input type="submit" class="btn btn-danger" value="DELETE">
+                       </form>
+                   </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+
+        {% else %}
+        <H4 class="text-center alert alert-warning">Show Student Information</H4>
+            
+        {% endif %}
+            
+    </div>
+</div>
+
+  
+{% endblock content %}
